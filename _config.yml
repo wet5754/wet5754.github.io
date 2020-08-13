@@ -1,6 +1,6 @@
 title: Your awesome title
-author: SueBeen Park
-email: 1003jamie@gmail.com
+author: DeokSoo Jeong
+email: deoksoo5754@gmail.com
 description: > # this means to ignore newlines until "show_exerpts:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
@@ -12,8 +12,8 @@ show_excerpts: true # set to true to show excerpts on the homepage
 sass:
   sass_dir: _sass
 plainwhite:
-  name: SueBeen Park
-  tagline: Developer. NewBie
+  name: DeokSoo jeong
+  tagline: Beginner 
   date_format: "%b %-d, %Y"
   sitemap: true # set to true to generate sitemap.xml content
   search: true # set to true to enable searchbar
@@ -23,8 +23,8 @@ plainwhite:
 
   # generate social links in footer
   social_links:
-    github:  suebeen
-    instagram: clapkong
+    github:  wet5754
+    instagram: dsds_jj
 
     # Mastodon instances
     # mastodon:
