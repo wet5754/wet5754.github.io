@@ -51,7 +51,7 @@ public class main {
 			int ymid = (int) Math.ceil((ymax - ymin)/2);
 			
 			while(true) {
-				if(xmax - xmin < 20) break;
+				if(xmax - xmin < 20 && ymax - ymin <20) break;
 				int mid1 = findlow((int) Math.ceil((xmid - xmin)/2), (int) Math.ceil((ymax - ymid)/2), lines);//좌상
 				int mid2 = findlow((int) Math.ceil((xmax - xmid)/2), (int) Math.ceil((ymax - ymid)/2), lines);//우상
 				int mid3 = findlow((int) Math.ceil((xmid - xmin)/2), (int) Math.ceil((ymid - ymin)/2), lines);//좌하
@@ -84,18 +84,30 @@ public class main {
 			///////
 			
 			int ans = Integer.MAX_VALUE;
+			int tx = 0;
+			int ty = 0;
 			for(int i =xmin;i<xmax;i++) {
 				for(int j =ymin;j<ymax;j++) {
 					int max = 0;
+					int ttx = 0;
+					int tty = 0;
 					
 					for(int p = 0;p<lines.length;p++) {
 						int tmp = func(lines[p][0], lines[p][1], lines[p][2], lines[p][3], i, j);
-						if(tmp>max) max = tmp;
+						if(tmp>max) {
+							max = tmp;
+							ttx = i; tty = j;
+						}
 					}
 					
-					if(max<ans) ans = max;
+					if(max<ans) {
+						ans = max;
+						tx = ttx;
+						ty = tty;
+					}
 				}
 			}
+			
 			
 			System.out.println("Case #"+(test_case+1));
 			System.out.println(ans);
