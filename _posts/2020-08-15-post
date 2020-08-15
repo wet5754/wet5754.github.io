@@ -1,0 +1,51 @@
+---
+title: "SCPC 1회 예선 - 개구리 뛰기"
+date: 2020-08-15 12:45:28 -0400
+categories: SCPC
+---
+문제
+=====
+0번째 돌에서 부터 P번째 돌 사이에 N개의 돌이 있다.
+개구리는 0번째 돌에 있으며 한번에 최대 K만큼 이동할 수 있다.
+
+0번째 돌에서 P번째 돌까지 이동할 때 최소 점프 횟수를 출력한다.
+만약, 이동이 불가능할 경우 -1을 출력한다.
+
+시간복잡도
+========
+돌의 갯수는 1,000,000개
+
+코드
+====
+'''java
+            int times = 0;
+            int head = 1;
+            int tail = 0;
+            for(int i = 0;i<num;i++) {
+            	int tmplen = stones[head] - stones[tail];
+            	if(tmplen == len) {
+            		if(i!=num-1)
+            			times++;
+            		tail = head;
+            		head++;
+            	}else if(tmplen > len) {
+            		if(head - 1 == tail) {
+            			times = -1;
+            			break; // -1출력
+            		}else {
+            			times++;
+            			head--;
+            			tail = head++;
+            			i--;
+            		}
+            	}else {
+            		head++;
+            	}
+            	if(i == num-1) {
+            		times += 1;
+            		break;
+            	}
+            }
+'''
+개구리의 현재 위치를 tail, 이동할 다음 돌의 위치를 head로 하여 tail과 head의 거리를 최대 이동가능 거리와 비교하여 작성했다.
+다만, 마지막 점프에서 목적지까지의 거리가 최대 이동가능 거리보다 작거나 동일할 경우만 따로 조건문을 달았다.
