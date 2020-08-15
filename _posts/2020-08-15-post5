@@ -1,0 +1,105 @@
+package main;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class main {
+	
+	public static int func(int x1, int y1, int x2, int y2, int xt, int yt) {
+		return Math.min(Math.max(Math.abs(x1 - xt), Math.abs(y1 - yt)), Math.max(Math.abs(x2 - xt), Math.abs(y2 - yt)));
+	}
+	
+	public static int findlow(int x, int y, int[][] lines) {
+		int min = Integer.MAX_VALUE;
+		for(int i =0;i<lines.length;i++) {
+			int tmp = func(lines[i][0], lines[i][1], lines[i][2], lines[i][3], x, y);
+			if(tmp < min) {
+				min = tmp;
+			}
+		}
+		
+		return min;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		
+		int T = sc.nextInt();
+		for(int test_case = 0;test_case <T; test_case++) {
+			int line_num = sc.nextInt();
+			int[][] lines = new int[line_num][4];
+			int[] xpoints = new int[line_num*2];// 그냥 최솟값 구하는 거로 하면 궂이 이거 안만들어도....
+			int[] ypoints = new int[line_num*2];
+			
+			for(int i =0;i<line_num;i++) 
+				for(int j =0;j<4;j++) {
+					int point = sc.nextInt();
+					if(j%2==0) xpoints[(int) (j-Math.ceil(j/2)) + i*2] = point;
+					else ypoints[(int) (j-Math.ceil(j/2)) + i*2 - 1] = point;
+					lines[i][j] = point;
+				}
+			Arrays.parallelSort(xpoints);
+			Arrays.parallelSort(ypoints);
+			
+			int xmax = xpoints[xpoints.length -1];
+			int xmin = xpoints[0];
+			int xmid = (int) Math.ceil((xmax - xmin)/2);
+			
+			int ymax = ypoints[ypoints.length -1];
+			int ymin = ypoints[0];
+			int ymid = (int) Math.ceil((ymax - ymin)/2);
+			
+			while(true) {
+				if(xmax - xmin < 20) break;
+				int mid1 = findlow((int) Math.ceil((xmid - xmin)/2), (int) Math.ceil((ymax - ymid)/2), lines);//좌상
+				int mid2 = findlow((int) Math.ceil((xmax - xmid)/2), (int) Math.ceil((ymax - ymid)/2), lines);//우상
+				int mid3 = findlow((int) Math.ceil((xmid - xmin)/2), (int) Math.ceil((ymid - ymin)/2), lines);//좌하
+				int mid4 = findlow((int) Math.ceil((xmax - xmid)/2), (int) Math.ceil((ymid - ymin)/2), lines);//우하
+				
+				int tmp = Math.min(Math.min(mid1, mid2), Math.min(mid3, mid4));
+				if(tmp == mid1) {
+					xmax = xmid;
+					xmid = (int) Math.ceil((xmax - xmin)/2);
+					ymin = ymid;
+					ymid = (int) Math.ceil((ymax - ymin)/2);
+				}else if(tmp == mid2) {
+					xmin = xmid;
+					xmid = (int) Math.ceil((xmax - xmin)/2);
+					ymin = ymid;
+					ymid = (int) Math.ceil((ymax - ymin)/2);
+				}else if(tmp == mid3) {
+					xmax = xmid;
+					xmid = (int) Math.ceil((xmax - xmin)/2);
+					ymax = ymid;
+					ymid = (int) Math.ceil((ymax - ymin)/2);
+				}else {
+					xmin = xmid;
+					xmid = (int) Math.ceil((xmax - xmin)/2);
+					ymax = ymin;
+					ymid = (int) Math.ceil((ymax - ymin)/2);
+				}
+			}
+
+			///////
+			
+			int ans = Integer.MAX_VALUE;
+			for(int i =xmin;i<xmax;i++) {
+				for(int j =ymin;j<ymax;j++) {
+					int max = 0;
+					
+					for(int p = 0;p<lines.length;p++) {
+						int tmp = func(lines[p][0], lines[p][1], lines[p][2], lines[p][3], i, j);
+						if(tmp>max) max = tmp;
+					}
+					
+					if(max<ans) ans = max;
+				}
+			}
+			
+			System.out.println("Case #"+(test_case+1));
+			System.out.println(ans);
+		}
+	}
+
+}
