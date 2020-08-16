@@ -1,0 +1,40 @@
+package main;
+
+import java.util.Scanner;
+
+public class main {
+	public static int func(int n) {
+		if(n == 1) return n;
+		else return func(n-1) * n;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		
+		int T = sc.nextInt();
+		for(int test_case = 0;test_case <T; test_case++) {
+			int M = sc.nextInt();
+			int N = sc.nextInt();
+			int K = sc.nextInt();// K의 값은 최대 10개
+			int pcount = func(M+N)/func(M)*func(N);// 경우의 수
+			
+			int[][] rout = new int[N][M];
+			boolean[][] water = new boolean[N][M];
+			for(int i =0;i<N+1;i++) 
+				for(int j =0;j<M+1;j++) {
+					int tmp = sc.nextInt();
+					if(tmp < 0) water[i][j] = true;
+					else water[i][j] = false;					
+					rout[i][j] = Math.abs(tmp);
+				}
+			
+			
+			
+			
+			System.out.println("Case #"+(test_case+1));
+			System.out.println();
+		}
+	}
+
+}
